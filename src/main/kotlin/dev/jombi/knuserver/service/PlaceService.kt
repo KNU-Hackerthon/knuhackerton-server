@@ -9,11 +9,15 @@ import java.util.UUID
 @Service
 class PlaceService(private val placeRepository: PlaceRepository) {
     fun getBFPlaces(): List<Place> {
-        return placeRepository.getPlacesByBFVerifiedIs(true)
+        return placeRepository.getVerifiedPlace(true)
     }
 
     fun getPlace(uuid: UUID): Place? {
         return placeRepository.findByIdOrNull(uuid)
+    }
+
+    fun getPlaces(): List<Place> {
+        return placeRepository.getVerifiedPlace(false)
     }
 
     fun writeNewPlace(name: String, latitude: Double, longitude: Double, location: String?): Place? {

@@ -9,6 +9,6 @@ import java.util.UUID
 
 @Repository
 interface PlaceRepository : JpaRepository<Place, UUID> {
-    @Query("SELECT place FROM Place place")
-    fun getPlacesByBFVerifiedIs(@Param("isBF") isBF: Boolean): List<Place>
+    @Query("SELECT place FROM Place place WHERE place.isBFVerified=:isBF")
+    fun getVerifiedPlace(@Param("isBF") isBF: Boolean): List<Place>
 }

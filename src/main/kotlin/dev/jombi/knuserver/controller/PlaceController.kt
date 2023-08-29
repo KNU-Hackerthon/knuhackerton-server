@@ -3,26 +3,37 @@ package dev.jombi.knuserver.controller
 import dev.jombi.knuserver.DisabilityFacility
 import dev.jombi.knuserver.dto.request.NewPlaceRequest
 import dev.jombi.knuserver.dto.request.NewReviewRequest
-import dev.jombi.knuserver.dto.response.BFListResponse
+import dev.jombi.knuserver.dto.response.PlacesResponse
 import dev.jombi.knuserver.dto.response.ReviewResponse
 import dev.jombi.knuserver.entity.Place
 import dev.jombi.knuserver.service.PlaceService
 import dev.jombi.knuserver.service.ReviewService
+import dev.jombi.knuserver.util.GEOCoding
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
-@RequestMapping("/api/v1/place")
+@RequestMapping("/place")
 class PlaceController(val placeService: PlaceService, val reviewService: ReviewService) {
-    @GetMapping
-    fun getBFList(): ResponseEntity<BFListResponse> {
-        return ResponseEntity.ok(BFListResponse(placeService.getBFPlaces()))
+    @GetMapping("/bf")
+    fun getBFList(): ResponseEntity<PlacesResponse> {
+        return ResponseEntity.ok(PlacesResponse(placeService.getBFPlaces()))
+    }
+
+    @GetMapping("/{latitude}/{longitude}")
+    fun getPlaces(@PathVariable latitude: String, @PathVariable longitude: String, @RequestParam km: Int = 2): ResponseEntity<PlacesResponse> {
+        val list = placeService.getPlaces()
+        val lat = latitude.toDoubleOrNull() ?: return ResponseEntity.badRequest().build()
+        val lon = longitude.toDoubleOrNull() ?: return ResponseEntity.badRequest().build()
+        val kmMapped = list.filter { GEOCoding.measureDistance(lat, lon, it.latitude, it.longitude) > km * 1000.0 }
+        return ResponseEntity.ok(PlacesResponse(kmMapped))
     }
 
     @GetMapping("/{id}")
