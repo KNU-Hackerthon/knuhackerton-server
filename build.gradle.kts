@@ -43,5 +43,5 @@ tasks.withType<Test> {
 }
 
 application {
-    mainClass.set("dev.jombi.knuserver.MainKt")
+    mainClass.set("dev.jombi.knuserver.KNUApplicationKt")
 }
