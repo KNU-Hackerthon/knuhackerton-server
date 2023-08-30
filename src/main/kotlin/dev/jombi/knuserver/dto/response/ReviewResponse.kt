@@ -8,6 +8,5 @@ data class ReviewResponse(
     val handiToilet: Float,
     val brailleBlock: Float,
     val brailleMap: Float,
-    val address: String? = null,
     val reviews: List<String>
 )

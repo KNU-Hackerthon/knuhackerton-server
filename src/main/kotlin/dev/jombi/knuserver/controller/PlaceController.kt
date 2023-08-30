@@ -50,7 +50,7 @@ class PlaceController(val placeService: PlaceService, val reviewService: ReviewS
     @PostMapping
     fun addNewPlace(@RequestBody request: NewPlaceRequest): ResponseEntity<Place> {
         return try {
-            val place = placeService.writeNewPlace(request.placeName, request.latitude, request.longitude, request.location)
+            val place = placeService.writeNewPlace(request.placeName, request.latitude, request.longitude)
             place?.let { ResponseEntity.ok(it) } ?: ResponseEntity.unprocessableEntity().build()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -87,7 +87,6 @@ class PlaceController(val placeService: PlaceService, val reviewService: ReviewS
             avg[3],
             avg[4],
             avg[5],
-            place.location,
             reviews.map { it.comment }
         )
         return ResponseEntity.ok(response)

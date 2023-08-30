@@ -20,7 +20,7 @@ class PlaceService(private val placeRepository: PlaceRepository) {
         return placeRepository.getVerifiedPlace(false)
     }
 
-    fun writeNewPlace(name: String, latitude: Double, longitude: Double, location: String?): Place? {
-        return placeRepository.save(Place(placeName = name, longitude = longitude, latitude = latitude, location = location))
+    fun writeNewPlace(name: String, latitude: Double, longitude: Double): Place? {
+        return placeRepository.save(Place(placeName = name, longitude = longitude, latitude = latitude))
     }
 }

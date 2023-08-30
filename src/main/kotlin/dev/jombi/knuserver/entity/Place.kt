@@ -15,8 +15,6 @@ data class Place(
     val placeName: String,
     val latitude: Double,
     val longitude: Double,
-    @Column(length = 2048, nullable = true)
-    val location: String? = null,
     @Column(name = "is_bf_verified")
     val isBFVerified: Boolean = false,
 )
