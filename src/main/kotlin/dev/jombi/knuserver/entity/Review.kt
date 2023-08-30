@@ -6,7 +6,7 @@ import jakarta.persistence.*
 data class Review(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long,
+    val id: Long = 0L,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "placeId")
     val place: Place,
