@@ -1,11 +1,12 @@
 package dev.jombi.knuserver.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.FetchType
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 
+@Entity
 data class Review(
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    val id: Long,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "placeId")
     val place: Place,
