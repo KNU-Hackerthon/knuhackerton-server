@@ -5,6 +5,7 @@ import dev.jombi.knuserver.dto.request.NewReviewRequest
 import dev.jombi.knuserver.dto.response.PlacesResponse
 import dev.jombi.knuserver.dto.response.ReviewResponse
 import dev.jombi.knuserver.entity.Place
+import dev.jombi.knuserver.initializer.LOGGER
 import dev.jombi.knuserver.service.PlaceService
 import dev.jombi.knuserver.service.ReviewService
 import dev.jombi.knuserver.util.DisabilityFacility
@@ -32,7 +33,9 @@ class PlaceController(val placeService: PlaceService, val reviewService: ReviewS
         val list = placeService.getPlaces()
         val lat = latitude.toDoubleOrNull() ?: return ResponseEntity.badRequest().build()
         val lon = longitude.toDoubleOrNull() ?: return ResponseEntity.badRequest().build()
-        val kmMapped = list.filter { GEOCoding.measureDistance(lat, lon, it.latitude, it.longitude) > km * 1000.0 }
+        val kmMapped = list.onEach {
+            LOGGER.info("{}: {}", it.placeName, GEOCoding.measureDistance(lat, lon, it.latitude, it.longitude))
+        }.filter { GEOCoding.measureDistance(lat, lon, it.latitude, it.longitude) > km * 1000.0 }
         return ResponseEntity.ok(PlacesResponse(kmMapped))
     }
 
