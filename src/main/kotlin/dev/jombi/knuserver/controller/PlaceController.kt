@@ -5,7 +5,6 @@ import dev.jombi.knuserver.dto.request.NewReviewRequest
 import dev.jombi.knuserver.dto.response.PlacesResponse
 import dev.jombi.knuserver.dto.response.ReviewResponse
 import dev.jombi.knuserver.entity.Place
-import dev.jombi.knuserver.initializer.LOGGER
 import dev.jombi.knuserver.service.PlaceService
 import dev.jombi.knuserver.service.ReviewService
 import dev.jombi.knuserver.util.DisabilityFacility
@@ -88,7 +87,7 @@ class PlaceController(val placeService: PlaceService, val reviewService: ReviewS
             avg[3],
             avg[4],
             avg[5],
-            reviews.map { it.comment }
+            reviews.map { it.comment }.filter { it.isNotBlank() }
         )
         return ResponseEntity.ok(response)
     }
