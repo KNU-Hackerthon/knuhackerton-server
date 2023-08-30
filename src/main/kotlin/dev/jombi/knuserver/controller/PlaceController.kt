@@ -33,9 +33,7 @@ class PlaceController(val placeService: PlaceService, val reviewService: ReviewS
         val list = placeService.getPlaces()
         val lat = latitude.toDoubleOrNull() ?: return ResponseEntity.badRequest().build()
         val lon = longitude.toDoubleOrNull() ?: return ResponseEntity.badRequest().build()
-        val kmMapped = list.onEach {
-            LOGGER.info("{}: {}", it.placeName, GEOCoding.measureDistance(lat, lon, it.latitude, it.longitude))
-        }.filter { GEOCoding.measureDistance(lat, lon, it.latitude, it.longitude) > km * 1000.0 }
+        val kmMapped = list.filter { GEOCoding.measureDistance(lat, lon, it.latitude, it.longitude) <= km * 1000.0 }
         return ResponseEntity.ok(PlacesResponse(kmMapped))
     }
 
