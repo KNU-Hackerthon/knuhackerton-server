@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package dev.jombi.knuserver
+package dev.jombi.knuserver.util
 
 object DisabilityFacility {
     const val RAMP_SAVED = 1 shl 0

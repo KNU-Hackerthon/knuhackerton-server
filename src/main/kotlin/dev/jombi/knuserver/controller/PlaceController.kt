@@ -1,6 +1,5 @@
 package dev.jombi.knuserver.controller
 
-import dev.jombi.knuserver.DisabilityFacility
 import dev.jombi.knuserver.dto.request.NewPlaceRequest
 import dev.jombi.knuserver.dto.request.NewReviewRequest
 import dev.jombi.knuserver.dto.response.PlacesResponse
@@ -8,6 +7,7 @@ import dev.jombi.knuserver.dto.response.ReviewResponse
 import dev.jombi.knuserver.entity.Place
 import dev.jombi.knuserver.service.PlaceService
 import dev.jombi.knuserver.service.ReviewService
+import dev.jombi.knuserver.util.DisabilityFacility
 import dev.jombi.knuserver.util.GEOCoding
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
